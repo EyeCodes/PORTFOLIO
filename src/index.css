@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+*{
+  transition: .1s linear !important;
+  font-family:'Cantarell', sans-serif;
+}
+
+button:hover, .btn:hover{
+  scale: 1.1;
+}
