@@ -1,26 +1,35 @@
-import type { ReactNode } from "react";
-import { ChevronRight, UserRoundPen, ArrowDownToLine, SquareArrowOutUpRight, Send  } from 'lucide-react';
+import { type ReactNode } from "react";
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay'
+import { ChevronRight, UserRoundPen, ArrowDownToLine, SquareArrowOutUpRight, Send, Menu  } from 'lucide-react';
 import { SiTailwindcss, SiLaravel, SiJavascript, SiChatbot, SiLivewire, SiMariadb, SiReact, SiFirebase, SiUbuntu, SiDocker, SiPostgresql } from 'react-icons/si';
 import { FaGithub, FaEnvelope, FaLinkedin, FaPhone } from 'react-icons/fa';
+import { useState } from "react";
 interface ListNavProps {
   children: ReactNode;
 }
 
 const ListNav = ({ children }: ListNavProps) => (
-  <li className="font-semibold hover:cursor-pointer hover:text-blue-500">
+  <li className="hover:cursor-pointer hover:text-blue-400">
     {children}
   </li>
 );
 
+const year = new Date().getFullYear();
 
-function App() {
-  
+export default function App() {
+  const [rsafety] = useEmblaCarousel({ loop: true }, [ Autoplay({delay: 3000, stopOnInteraction: false})])
+  const [tasknotes] = useEmblaCarousel({ loop: true }, [ Autoplay({delay: 3000, stopOnInteraction: false})])
+  const [suggestionBox] = useEmblaCarousel({ loop: true }, [ Autoplay({delay: 3000, stopOnInteraction: false})])
+  const [invSys] = useEmblaCarousel({ loop: true }, [ Autoplay({delay: 3000, stopOnInteraction: false})])
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <header className="h-15 w-full fixed top-0 left-0 bg-white p-2 pl-5 pr-5 flex flex-row justify-between border-b border-blue-500 items-center">
+      <header className="h-15 w-full fixed top-0 left-0 z-99 bg-white p-2 pl-5 pr-5 flex flex-row justify-between border-b border-blue-500 items-center">
         <div className="h-full p-2 font-bold text-xl text-blue-500">Kennith Khember Villegas</div>
-        <nav>
-          <ul className="h-full w-fit p-2 flex flex-row gap-5">
+        <button className="md:hidden hover:scale-1! rounded-md p-2" onClick={() => setIsOpen((prev) => !prev)}><Menu /></button>
+        <nav className={isOpen ? 'h-fit bg-white flex absolute md:relative top-0 right-0 mt-15 md:mt-0 z-99' : 'hidden md:flex'}>
+          <ul className={isOpen ? "h-full w-50 md:w-full p-2 flex flex-col md:flex-row gap-5 border border-blue-500 md:border-none" : "md:h-full w-fit p-2 flex gap-5"}>
             <ListNav><a href="#hero">Home</a></ListNav>
             <ListNav><a href="#about">About</a></ListNav>
             <ListNav><a href="#projects">Projects</a></ListNav>
@@ -35,15 +44,15 @@ function App() {
         <div className="h-[90vh] w-full mt-15 p-5 flex justify-center items-center" id="hero">
           <div className="h-60 w-full p-5 grid justify-center items-center">
               <div className="flex flex-col justify-center items-center gap-2 p-2">
-                <h1 className="text-3xl font-extrabold">Kennith Khember Villegas</h1>
-                <h2 className="text-blue-400">Hi, I'm Ken. A web developer specializing in backend engineering using Laravel.</h2>
+                <h1 className="text-3xl font-extrabold text-center">Kennith Khember Villegas</h1>
+                <h2 className="text-blue-400 text-center">Hi, I'm Ken. A web developer specializing in backend engineering using Laravel.</h2>
               </div>
               
               <div className="w-full flex justify-center items-center mt-5 mb-5">
-                <nav className="w-80 flex flex-wrap gap-5 justify-center items-center">
-                  <a className="btn w-fit bg-blue-500 flex rounded-md p-2 text-white font-semibold" href="#skills">See My Work <ChevronRight /></a>
-                  <a href="#contact" className="btn w-fit bg-none flex gap-2 border border-amber-500 rounded-md p-2 text-amber-500 font-semibold">Contact Me <UserRoundPen /></a>
-                  <a href="/KV-resume.pdf" download={"ken-vill-resume.pdf"} className="btn bg-none flex gap-2 border border-green-500 rounded-md p-2 text-green-500 font-semibold">Download Resume <ArrowDownToLine /></a>
+                <nav className="w-60 md:w-85 flex flex-wrap gap-5 justify-center items-center">
+                  <a className="btn w-fit bg-blue-500 flex rounded-md p-2 text-white font-semibold" href="#projects">See My Work <ChevronRight /></a>
+                  <a href="#contact" className="btn w-fit bg-none flex gap-2 border border-amber-500 rounded-md p-2 text-amber-500 font-semibold hover:bg-amber-400 hover:text-white">Contact Me <UserRoundPen /></a>
+                  <a href="/KV-resume.pdf" download={"ken-vill-resume.pdf"} className="btn bg-none flex gap-2 border border-green-500 rounded-md p-2 text-green-500 font-semibold hover:bg-green-400 hover:text-white">Download Resume <ArrowDownToLine /></a>
                 </nav>
               </div>
                 <nav className="w-full justify-center p-4 flex gap-10 *:text-2xl">
@@ -65,7 +74,6 @@ function App() {
               <div className="p-2">
                 <h1 className="text-2xl font-bold text-blue-500 pb-2">ABOUT ME</h1>
                 <p className="text-justify">I am a web developer who loves diving into backend engineering. I primarily build with Laravel, paired with React and Tailwind for the frontend. I am deeply passionate about learning new concepts and translating them into clean, functional logic. Whether I am writing code myself or using AI as an assistive tool, my focus is always on understanding exactly how the underlying systems work. Problem-solving can be frustrating, but the satisfaction of finally cracking a tough bug is exactly why I enjoy this field. Beyond writing code, I have guided projects from start to finish as a Full-Stack Developer, Team Lead, and Code Reviewer, ensuring our team stays coordinated and our code stays clean. 
-
                 </p>
               </div>
             </div>
@@ -73,20 +81,50 @@ function App() {
         </section>
 
         <section id="projects"></section>
-        <section className="w-full grid gap-2" >
-          <h1 className="text-2xl font-bold text-blue-500">PROJECTS</h1>
-
-          <div className="w-[90vw] grid gap-4 border-2 border-blue-500 rounded-xl p-2">
+        <section className="w-full grid gap-2 justify-center" >
+          <h1 className="text-2xl font-extrabold text-blue-500 text-center">PROJECTS</h1>
+            
+          <div className=" w-[80vw] grid gap-4 border-2 border-blue-500 rounded-xl p-2 overflow-x-scroll scrollbar-hide">
+            
             <div className="bg-blue-400 rounded-md p-5 grid gap-2">
               <h1 className="text-white font-bold text-2xl">Rsafety</h1>
+              <div className="overflow-hidden w-full mx-auto" ref={rsafety}>
+                <div className="flex">
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/rsafety/homepage.png" alt="rsafety_homepage" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/rsafety/login.png" alt="rsafety_login_page" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/rsafety/know.png" alt="rsafety_know_your_rights_page" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/rsafety/map.png" alt="rsafety_map_page" />
+                  </div>
+                </div>
+              </div>
               <p className="bg-white rounded-md text-blue-500 p-2">A hackathon project based on SDG-16 promoting peace and unity. A web service where users are able to post and share their experiences, join diverse group of communities, check their area for bad activities that happened, read the laws about crime and violence and contact professional help.</p>
               <div className="flex justify-evenly *:text-white p-2 *:h-10 *:w-10 gap-4">
                 <SiLaravel /> <SiTailwindcss /> <SiJavascript /> <SiMariadb /> <SiChatbot />
               </div>
             </div>
 
-            <div className="bg-blue-400 rounded-md p-5 grid gap-2">
+            <div className="bg-blue-400 rounded-md p-5 grid gap-2 relative">
               <h1 className="text-white font-bold text-2xl">TaskNotes</h1>
+              <div className="overflow-hidden w-full mx-auto" ref={tasknotes}>
+                <div className="flex">
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/tasknotes/main.png" alt="tasknotes_homepage" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/tasknotes/login.png" alt="tasknotes_login_page" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/tasknotes/register.png" alt="tasknotes_register_page" />
+                  </div>
+                </div>
+              </div>
               <p className="bg-white rounded-md text-blue-500 p-2">A simple project where you can create a task with title, description, and due date. Users will be able to see their current pending task, completed task and create/update/delete task.</p>
               <div className="flex justify-evenly *:text-white p-2 *:h-10 *:w-10 gap-4">
                 <SiLaravel /> <SiTailwindcss /> <SiLivewire /> <SiMariadb />
@@ -95,6 +133,19 @@ function App() {
 
             <div className="bg-blue-400 rounded-md p-5 grid gap-2">
               <h1 className="text-white font-bold text-2xl">Suggestion Box</h1>
+              <div className="overflow-hidden w-full mx-auto" ref={suggestionBox}>
+                <div className="flex">
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/suggestion/home.png" alt="suggestion_homepage" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/suggestion/create.png" alt="suggestion_create_page" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/suggestion/report.png" alt="suggestion_report_page" />
+                  </div>
+                </div>
+              </div>
               <p className="bg-white rounded-md text-blue-500 p-2">Account free suggestion box.Users can create a suggestion box set tite, description, set color and add image in front of the box. Participant users will only have to search for the box name to send their suggestion/letter.</p>
                 <nav className="w-full flex justify-end">
                   <a href="https://suggestion-box-4d492.web.app/" className="w-fit p-2 bg-green-400 text-white font-bold rounded-md flex flex-row flex-nowrap gap-2" target="blank">Visit Project <SquareArrowOutUpRight /> </a>
@@ -106,6 +157,22 @@ function App() {
 
             <div className="bg-blue-400 rounded-md p-5 grid gap-2">
               <h1 className="text-white font-bold text-2xl">Inventory Management System</h1>
+              <div className="overflow-hidden w-full mx-auto" ref={invSys}>
+                <div className="flex">
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/inventory-management/dashboard.png" alt="inventory_management_dashboard" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/inventory-management/physical-count.png" alt="inventory_management_physical_count_page" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/inventory-management/stock.png" alt="inventory_management_stock_page" />
+                  </div>
+                  <div className="flex-[0_0_100%] max-w-full min-w-0 text-white">
+                    <img src="/projects/inventory-management/stock-form.png" alt="inventory_management_stock_form_page" />
+                  </div>
+                </div>
+              </div>
               <p className="bg-white rounded-md text-blue-500 p-2">Full-Stack Development of a Inventory System, CRUD of items and forms, download forms. Used CLI Ubuntu and CLI docker to deploy system locally while saving performance usage.</p>
               <div className="flex justify-evenly *:text-white p-2 *:h-10 *:w-10 gap-4">
                 <SiLaravel /> <SiTailwindcss /> <SiJavascript /> <SiLivewire /> <SiPostgresql /> <SiUbuntu /> <SiDocker />
@@ -166,7 +233,7 @@ function App() {
           <h1 className="text-2xl font-bold text-blue-500">EDUCATION</h1>
           <div className="w-[90vw] flex flex-wrap md:flex-nowrap gap-4 border-2 border-blue-500  rounded-xl p-2">
             <div className="w-full bg-blue-500 flex flex-col rounded-md items-center p-2">
-              <h1 className="font-bold text-2xl text-white p-1">Negros Oriental State University - 2026</h1>
+              <h1 className="font-bold text-[3vw] md:text-xl text-white p-1">Negros Oriental State University - 2026</h1>
               <h2 className="text-white">Computer Science</h2>
             </div>
           </div>
@@ -201,8 +268,49 @@ function App() {
         </section>
 
       </main>
+
+      <footer className="w-full p-4 bg-blue-500 flex flex-col md:flex-row gap-2 [&>div]:w-[25%] [&>div>h1]:text-center">
+        <div className="md:w-[20%]! w-full! p-2 flex flex-col *:text-white  gap-2 justify-evenly">
+          <h1 className="text-xl font-extrabold text-left!">Kennith Khember Villegas</h1>
+          <p className="text-justify">A Web Developer specializing in backend Development using Laravel. Driven to Learn and find Solution with the assistance of AI.</p>
+          <span className="text-slate-300 text-[.8rem]">© {year} Kennith Khember Villegas. All rights reserved.</span>
+        </div>
+
+        <div className="py-2">
+          <h1 className="text-xl font-bold text-white">Navigation</h1>
+          <nav className="flex justify-center">
+            <ul className="flex flex-col gap-2 *:text-sm! *:text-white p-4">
+              <ListNav><a href="#hero">Home</a></ListNav>
+              <ListNav><a href="#about">About</a></ListNav>
+              <ListNav><a href="#projects">Projects</a></ListNav>
+              <ListNav><a href="#skills">Skills</a></ListNav>
+              <ListNav><a href="#education">Education</a></ListNav>
+              <ListNav><a href="#contact">Contact</a></ListNav>
+            </ul>
+          </nav>
+        </div>
+
+        <div className="p-2">
+          <h1 className="text-xl font-bold text-white">Socials</h1>
+          <nav className="flex justify-center">
+            <ul className="flex flex-col gap-2 *:text-ms! *:text-white p-4">
+                <a href="https://github.com/EyeCodes" target="blank"><FaGithub /></a>
+                <a href="https://www.linkedin.com/in/villegas-kennith-khember-399976414?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="blank"><FaLinkedin /></a>
+            </ul>
+          </nav>
+        </div>
+
+        <div className="p-2 ">
+          <h1 className="text-xl font-bold text-white">Contacts</h1>
+          <nav className="flex justify-right md:justify-center">
+            <ul className="flex flex-col gap-2 *:text-ms! p-4 *:text-white *:flex *:justify-start *:items-center *:gap-5 ">
+              <li><FaEnvelope /> khembervill@gmail.com</li>
+              <li><FaPhone className="text-green" /> +63 975 3066 898</li>
+            </ul>
+          </nav>
+        </div>
+      </footer>
     </>
   )
 }
 
-export default App
